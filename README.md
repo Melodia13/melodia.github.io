@@ -181,96 +181,12 @@ Melodía utiliza una **arquitectura de microservicios** desplegada en **Kubernet
 
 ### Diagrama de Alto Nivel
 
-```mermaid
-graph TB
-    subgraph "Client Layer"
-        Mobile[📱 Mobile App<br/>React Native/Flutter]
-    end
+<img src="./assets/images/alto_nivel.png" alt="Diagrama de Alto Nivel" width="100%">
 
-    subgraph "Kubernetes Cluster - Hostinger VM"
-        Gateway[🌐 API Gateway<br/>Kong/Nginx]
-        
-        subgraph "Microservices Pods"
-            Catalog[📚 Catalog API<br/>Port 8082]
-            User[👤 User API<br/>Port 8080]
-            Artist[🎤 Artist API<br/>Port 8081]
-            Analytics[📊 Analytics API<br/>Port 8083]
-            Notifications[🔔 Notifications API<br/>Port 8084]
-        end
-        
-        subgraph "Data Layer"
-            MySQL[(🗄️ MySQL<br/>Relational DB)]
-            MongoDB[(🍃 MongoDB<br/>Analytics DB)]
-        end
-    end
-
-    Mobile -->|HTTPS| Gateway
-    
-    Gateway --> Catalog
-    Gateway --> User
-    Gateway --> Artist
-    Gateway --> Analytics
-    Gateway --> Notifications
-    
-    Catalog --> MySQL
-    User --> MySQL
-    Artist --> MySQL
-    Notifications --> MySQL
-    Analytics --> MongoDB
-
-    Catalog -.->|Auth Validation| User
-    Artist -.->|Auth Validation| User
-    Analytics -.->|Catalog Info| Catalog
-
-    classDef client fill:#E1F5FE,stroke:#2196F3,stroke-width:3px
-    classDef gateway fill:#FFF3E0,stroke:#FF9800,stroke-width:3px
-    classDef service fill:#E8F5E9,stroke:#4CAF50,stroke-width:2px
-    classDef database fill:#F3E5F5,stroke:#9C27B0,stroke-width:2px
-
-    class Mobile client
-    class Gateway gateway
-    class Catalog,User,Artist,Analytics,Notifications service
-    class MySQL,MongoDB database
-```
 
 ### Flujo de Comunicación
 
-```mermaid
-sequenceDiagram
-    participant M as 📱 Mobile App
-    participant G as 🌐 Gateway
-    participant U as 👤 User API
-    participant C as 📚 Catalog API
-    participant A as 🎤 Artist API
-    participant AN as 📊 Analytics API
-    
-    Note over M,AN: Flujo de Autenticación
-    M->>G: 1. POST /auth/login
-    G->>U: Forward Request
-    U-->>G: JWT Token + User Data
-    G-->>M: 200 OK + Token
-    
-    Note over M,AN: Flujo de Búsqueda de Música
-    M->>G: 2. GET /catalog/search?q=rock
-    G->>C: Forward + Bearer Token
-    C->>U: Validate Token
-    U-->>C: Token Valid
-    C-->>G: Search Results
-    G-->>M: 200 OK + Results
-    
-    Note over M,AN: Flujo de Reproducción
-    M->>G: 3. GET /catalog/songs/{id}/stream
-    G->>C: Stream Request
-    C-->>G: Audio Stream
-    G-->>M: Audio Data
-    
-    M->>G: 4. POST /analytics/events/play
-    G->>AN: Record Play Event
-    AN->>C: Increment Play Count
-    C-->>AN: Updated
-    AN-->>G: Event Recorded
-    G-->>M: 201 Created
-```
+<img src="./assets/images/comunicacion_song.png" alt="Flujo de Comunicacion" width="100%">
 
 ---
 
@@ -394,7 +310,7 @@ sequenceDiagram
 
 ### Kubernetes Deployment
 
-<img src="./assets/images/kube-deploy.png" alt="Deply kubernetes" width="100%">
+<img src="./assets/images/kube-deploy.png" alt="Deploy kubernetes" width="100%">
 
 <img src="./assets/images/backoffice_flow.jpeg" alt="Flujo Backoffice" width="100%">
 

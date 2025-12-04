@@ -138,15 +138,6 @@ La plataforma permite a los usuarios descubrir, reproducir y gestionar música, 
 - **HTTP Client**: Fetch API / Axios
 - **Integracion**: Supabase para archivos multimedia
 
-**Endpoints Consumidos**:
-```
-/api/v1/users/admin/users          # Gestión de usuarios
-/api/v1/catalog                     # Gestión de catálogo
-/api/v1/catalog/policy              # Políticas regionales
-/api/v1/analytics/audit             # Auditoría
-/api/v1/analytics/metrics           # Métricas y breakdowns
-/api/v1/artists                     # Gestión de artistas
-```
 
 **Configuración**:
 ```env
@@ -169,8 +160,6 @@ EXPO_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
 
 **Descripción**: Conjunto de microservicios independientes para lógica de negocio
 
----
-
 ## 🏗️ Arquitectura del Sistema
 
 Melodía utiliza una **arquitectura de microservicios** desplegada en **Kubernetes** en una máquina virtual de Hostinger.
@@ -184,7 +173,6 @@ Melodía utiliza una **arquitectura de microservicios** desplegada en **Kubernet
 
 <img src="./assets/images/comunicacion_song.png" alt="Flujo de Comunicacion" width="100%">
 
----
 
 ## 🔧 Microservicios
 
@@ -196,7 +184,7 @@ Melodía utiliza una **arquitectura de microservicios** desplegada en **Kubernet
 - Gestión de álbumes, singles, EPs
 - Playlists (públicas y privadas)
 - Géneros musicales
-- Sistema de likes/saves
+- Sistema de likes/saves/shares
 - Búsqueda unificada
 - Streaming de audio
 
@@ -209,7 +197,7 @@ Melodía utiliza una **arquitectura de microservicios** desplegada en **Kubernet
 **Responsabilidad**: Gestión de usuarios y autenticación
 
 **Funcionalidades**:
-- Registro y login (email/OAuth)
+- Registro y login (email/federado)
 - Gestión de perfiles
 - Sistema de follow/unfollow
 - Validación de tokens (JWT)
@@ -243,7 +231,6 @@ Melodía utiliza una **arquitectura de microservicios** desplegada en **Kubernet
 - Historial de reproducción
 - Top songs por artista
 - Eventos de auditoría
-- Estadísticas de engagement
 
 **Base de Datos**: MongoDB  
 
@@ -267,12 +254,14 @@ Melodía utiliza una **arquitectura de microservicios** desplegada en **Kubernet
 
 ### Backend
 
-| Tecnología | Uso | Versión |
-|------------|-----|---------|
-| **Go (Golang)** | Lenguaje principal de APIs | 1.24+ |
-| **Gin** | Framework HTTP | Latest |
-| **GORM** | ORM para MySQL | v2 |
-| **MongoDB Driver** | Cliente MongoDB | Latest |
+| Tecnología | Uso |
+|------------|-----|
+| **Go (Golang)** | Lenguaje principal de APIs |
+| **JavaScript** | Lenguaje principal de APIs |
+| **N8N** | Automatizaciones |
+| **Gin** | Framework HTTP |
+| **GORM** | ORM para MySQL |
+| **MongoDB Driver** | Cliente MongoDB |
 
 ### Bases de Datos
 
@@ -290,14 +279,15 @@ Melodía utiliza una **arquitectura de microservicios** desplegada en **Kubernet
 | **Gateway** | Kong/Nginx | Routing y load balancing |
 | **Contenedores** | Docker | Empaquetado de servicios |
 | **Storage** | Supabase | Almacenamiento de archivos |
+| **Servicio**| Firebase | Servicio de mensajeria |
+| **Google**| Autenticacion | Login federado |
 
 ### Observabilidad
 
 | Herramienta | Uso |
 |-------------|-----|
-| **DataDog APM** | Monitoreo y trazabilidad |
-| **Uber Zap** | Logging estructurado |
-| **Prometheus** | Métricas (opcional) |
+| **DataDog** | Monitoreo, trazabilidad y logs |
+| **Zap** | Logging estructurado |
 
 ---
 

@@ -9,6 +9,7 @@
 [![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 [![Go](https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white)](https://golang.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
 
 </div>
 
@@ -395,19 +396,6 @@ sequenceDiagram
 
 <img src="./assets/images/kube-deploy.png" alt="Deply kubernetes" width="100%">
 
-
-### Configuración de Pods
-
-| Servicio | CPU Request | CPU Limit | Memory Request | Memory Limit | Replicas |
-|----------|-------------|-----------|----------------|--------------|----------|
-| Gateway | 100m | 500m | 128Mi | 512Mi | 2 |
-| Catalog API | 200m | 1000m | 256Mi | 1Gi | 3 |
-| User API | 100m | 500m | 128Mi | 512Mi | 2 |
-| Artist API | 100m | 500m | 128Mi | 512Mi | 2 |
-| Analytics API | 150m | 750m | 256Mi | 1Gi | 2 |
-| Notifications API | 100m | 500m | 128Mi | 512Mi | 2 |
-
----
 
 ## 📚 Documentación Detallada
 

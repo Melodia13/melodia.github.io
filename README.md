@@ -300,7 +300,7 @@ Melodía utiliza una **arquitectura de microservicios** desplegada en **Kubernet
 
 ### Backoffice
 
-<img src="./assets/images/backoffice_flow.jpeg" alt="Flujo Backoffice" width="100%">
+<img src="./assets/images/backoffice_flow.png" alt="Flujo Backoffice" width="100%">
 
 <img src="./assets/images/components.jpeg" alt="Componentes" width="100%">
 

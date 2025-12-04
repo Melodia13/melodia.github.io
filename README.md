@@ -30,8 +30,6 @@
   - [Kubernetes Deployment](#kubernetes-deployment)
   - [Backoffice](#backoffice)
   - [Documentación por API](#documentación-por-api)
-- [Guía Rápida](#-guía-rápida)
-  - [Requisitos Previos](#requisitos-previos)
 - [Licencia](#-licencia)
 - [Repositorio de Documentación](#documentación-httpsgithubcommelodia13melodiagithubio)
 
@@ -319,17 +317,6 @@ Melodía utiliza una **arquitectura de microservicios** desplegada en **Kubernet
 - **[🎤 Artist API](https://github.com/Melodia13/artist-api)** - Perfiles de artistas
 - **[📊 Analytics API](https://github.com/Melodia13/analytics-api)** - Métricas y analytics
 - **[🔔 Notifications API](https://github.com/Melodia13/notifications-api)** - Sistema de notificaciones
-
----
-
-## 🚀 Guía Rápida
-
-### Requisitos Previos
-
-- Acceso a la VM de Hostinger
-- kubectl configurado
-- Docker (para desarrollo local)
-
 
 ---
 

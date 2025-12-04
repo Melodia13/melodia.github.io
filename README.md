@@ -393,66 +393,9 @@ sequenceDiagram
 
 ### Kubernetes Deployment
 
-```mermaid
-graph TB
-    subgraph "Hostinger VM"
-        subgraph "Kubernetes Cluster"
-            subgraph "Namespace: melodia-production"
-                
-                subgraph "Gateway Layer"
-                    GW_POD[Pod: API Gateway<br/>Replicas: 2]
-                    GW_SVC[Service: gateway-svc<br/>Type: LoadBalancer]
-                end
-                
-                subgraph "Application Pods"
-                    CAT_POD[Pod: catalog-api<br/>Replicas: 3]
-                    USER_POD[Pod: user-api<br/>Replicas: 2]
-                    ART_POD[Pod: artist-api<br/>Replicas: 2]
-                    ANA_POD[Pod: analytics-api<br/>Replicas: 2]
-                    NOT_POD[Pod: notifications-api<br/>Replicas: 2]
-                end
-                
-                subgraph "Data Services"
-                    MYSQL_POD[StatefulSet: MySQL<br/>Replicas: 1]
-                    MONGO_POD[StatefulSet: MongoDB<br/>Replicas: 1]
-                end
-                
-                subgraph "Storage"
-                    PV_MYSQL[PersistentVolume<br/>MySQL Data]
-                    PV_MONGO[PersistentVolume<br/>MongoDB Data]
-                end
-            end
-        end
-    end
-    
-    Internet[🌐 Internet] -->|HTTPS| GW_SVC
-    GW_SVC --> GW_POD
-    
-    GW_POD --> CAT_POD
-    GW_POD --> USER_POD
-    GW_POD --> ART_POD
-    GW_POD --> ANA_POD
-    GW_POD --> NOT_POD
-    
-    CAT_POD --> MYSQL_POD
-    USER_POD --> MYSQL_POD
-    ART_POD --> MYSQL_POD
-    NOT_POD --> MYSQL_POD
-    ANA_POD --> MONGO_POD
-    
-    MYSQL_POD --> PV_MYSQL
-    MONGO_POD --> PV_MONGO
 
-    classDef gateway fill:#FFF3E0,stroke:#FF9800,stroke-width:2px
-    classDef app fill:#E8F5E9,stroke:#4CAF50,stroke-width:2px
-    classDef data fill:#F3E5F5,stroke:#9C27B0,stroke-width:2px
-    classDef storage fill:#E3F2FD,stroke:#2196F3,stroke-width:2px
+<img src="./assets/images/kube-deploy.png" alt="Deply kubernetes" width="100%">
 
-    class GW_POD,GW_SVC gateway
-    class CAT_POD,USER_POD,ART_POD,ANA_POD,NOT_POD app
-    class MYSQL_POD,MONGO_POD data
-    class PV_MYSQL,PV_MONGO storage
-```
 
 ## 📚 Documentación Detallada
 
@@ -460,33 +403,15 @@ graph TB
 
 ## 📚 Documentación Detallada y Diagramas
 
-<details>
-<summary><strong>🏗️ Arquitectura General</strong> (Clic para desplegar)</summary>
-<br>
 
 <img src="./assets/images/architecture.jpeg" alt="Arquitectura General" width="100%">
-</details>
-
-<details>
-<summary><strong>☁️ Infraestructura Kubernetes</strong> (Clic para desplegar)</summary>
-<br>
 
 <img src="./assets/images/deploy_kb.jpeg" alt="Infraestructura Kubernetes" width="100%">
-</details>
-
-<details>
-<summary><strong>🔄 Flujos de Comunicación y Procesos</strong> (Clic para desplegar)</summary>
-<br>
 
 <img src="./assets/images/backoffice_flow.jpeg" alt="Flujo Backoffice" width="100%">
-</details>
-
-<details>
-<summary><strong>🧩 Componentes del Sistema</strong> (Clic para desplegar)</summary>
-<br>
 
 <img src="./assets/images/components.jpeg" alt="Componentes" width="100%">
-</details>
+
 
 
 ### Documentación por API
@@ -644,7 +569,7 @@ Este proyecto es propiedad privada de Melodía. Todos los derechos reservados.
 
 - **Email**: dev@melodia.com
 - **Slack**: #melodia-dev
-- **Documentación**: https://docs.melodia.com
+- **Documentación**: https://github.com/Melodia13/melodia.github.io
 
 ---
 
@@ -654,128 +579,3 @@ Este proyecto es propiedad privada de Melodía. Todos los derechos reservados.
 
 </div>
 
-
-
-# Melodia Frontend
-
-Aplicación móvil de Melodia construida con React Native y Expo.
-
-## Comandos
-
-```bash
-npm install
-npm run start
-```
-
-## Configuración de Variables de Entorno
-
-Crear un archivo `.env` en la raíz del proyecto con las siguientes variables:
-
-```env
-EXPO_PUBLIC_API_URL={proxy}
-EXPO_PUBLIC_SUPABASE_URL={supabase-url}
-SUPABASE_ANON_KEY={supabase-url}
-```
-
-Puedes usar el archivo `.env.example` como plantilla.
-
-## Arquitectura de APIs
-
-La aplicación se conecta a tres microservicios diferentes:
-
-### 1. User API
-- Gestión de usuarios y perfiles
-- Autenticación y autorización
-- Follow/Unfollow de artistas
-- Búsqueda de perfiles
-
-### 2. Artist API
-- Información de artistas
-- Métricas de artistas (monthly listeners, etc.)
-- Búsqueda de artistas
-
-### 3. Catalog API
-- **Catálogo completo de música**: álbumes, EPs, singles
-- Discografía de artistas
-- Lanzamientos próximos (upcoming releases)
-- Búsqueda de contenido musical
-
-## Funcionalidades Principales
-
-### Búsqueda Universal
-- Busca artistas, usuarios, álbumes, EPs y singles desde una sola interfaz
-- Resultados categorizados y organizados
-- Navegación directa a pantallas de detalle
-
-### Pantallas de Detalle
-- **AlbumDetailScreen**: Visualiza información completa de un álbum
-- **EPDetailScreen**: Visualiza información completa de un EP
-- **SingleDetailScreen**: Visualiza y reproduce singles
-- **ArtistProfileScreen**: Perfil completo del artista con discografía
-- **UpcomingReleasesScreen**: Próximos lanzamientos del artista
-
-### Integración con Catalog API
-Toda la música (álbumes, EPs, singles) se obtiene desde `catalog-api`:
-- `/api/v1/catalog/albums` - Álbumes
-- `/api/v1/catalog/eps` - EPs
-- `/api/v1/catalog/singles` - Singles
-- `/api/v1/catalog/albums/upcoming` - Álbumes próximos
-- `/api/v1/catalog/eps/upcoming` - EPs próximos
-- `/api/v1/catalog/singles/upcoming` - Singles próximos
-- `/api/v1/catalog/search` - Búsqueda en catálogo
-
-## Estructura del Proyecto
-
-```
-app/
-├── components/        # Componentes reutilizables
-│   └── SearchModal.tsx
-├── context/          # Contextos de React
-│   ├── AuthContext.tsx
-│   └── ThemeContext.tsx
-├── screens/          # Pantallas de la aplicación
-│   ├── AlbumDetailScreen.tsx
-│   ├── EPDetailScreen.tsx
-│   ├── SingleDetailScreen.tsx
-│   ├── ArtistProfileScreen.tsx
-│   ├── UpcomingReleasesScreen.tsx
-│   └── ...
-└── services/         # Servicios de API
-    ├── httpCatalog.ts    # Cliente HTTP para catalog-api
-    ├── catalog.ts        # Servicio de catálogo
-    ├── httpArtist.ts     # Cliente HTTP para artist-api
-    ├── artist.ts         # Servicio de artistas
-    ├── httpClientUser.ts # Cliente HTTP para user-api
-    └── profile.ts        # Servicio de perfiles
-```
-
-## Cambios
-
-### Migración a Catalog API
-- **Antes**: La música se obtenía desde artist-api
-- **Ahora**: Toda la música se obtiene desde catalog-api centralizado
-- **Beneficio**: Fuente única de verdad para contenido musical
-
-## Pruebas de Login Federado (Google)
-
-Para probar funcionalidades como el login con Google, que dependen de esquemas de URL personalizados (`melodia-app://`), es necesario utilizar un "development build" en lugar de la aplicación Expo Go.
-
-Sigue estos pasos para crear y ejecutar un development build en Android:
-
-1.  **Instalar el cliente de desarrollo de Expo:**
-    ```bash
-    npm install --save-dev expo-dev-client
-    ```
-
-2.  **(Opcional) Instalar dependencias para Android en Linux:**
-    Si no tienes el JDK de Java, puedes instalarlo con el siguiente comando:
-    ```bash
-    sudo apt update && sudo apt install -y openjdk-17-jdk unzip
-    ```
-
-3.  **Ejecutar el build de desarrollo:**
-    Con un dispositivo Android conectado a tu computadora (con depuración USB habilitada) o un emulador de Android en ejecución, ejecuta:
-    ```bash
-    npx expo run:android
-    ```
-Este comando compilará e instalará la aplicación en tu dispositivo o emulador, permitiéndote probar el flujo de autenticación de Google.

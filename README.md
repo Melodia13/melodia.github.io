@@ -288,8 +288,6 @@ sequenceDiagram
 - Streaming de audio
 
 **Base de Datos**: MySQL  
-**Puerto**: 8082  
-**[📖 Documentación Detallada](./docs/CATALOG_API.md)**
 
 ---
 
@@ -305,9 +303,6 @@ sequenceDiagram
 - Gestión de sesiones
 
 **Base de Datos**: MySQL  
-**Puerto**: 8080  
-**[📖 Documentación Detallada](./docs/USER_API.md)**
-
 ---
 
 ### 3. 🎤 Artist API
@@ -323,8 +318,6 @@ sequenceDiagram
 - Métricas (monthly listeners)
 
 **Base de Datos**: MySQL  
-**Puerto**: 8081  
-**[📖 Documentación Detallada](./docs/ARTIST_API.md)**
 
 ---
 
@@ -340,8 +333,6 @@ sequenceDiagram
 - Estadísticas de engagement
 
 **Base de Datos**: MongoDB  
-**Puerto**: 8083  
-**[📖 Documentación Detallada](./docs/ANALYTICS_API.md)**
 
 ---
 
@@ -356,8 +347,6 @@ sequenceDiagram
 - Notificaciones de interacciones sociales
 
 **Base de Datos**: MySQL  
-**Puerto**: 8084  
-**[📖 Documentación Detallada](./docs/NOTIFICATIONS_API.md)**
 
 ---
 
@@ -481,11 +470,51 @@ graph TB
 
 ### Diagramas de Arquitectura
 
-- **[🏗️ Arquitectura General](./diagrams/SYSTEM_ARCHITECTURE.md)** - Vista completa del sistema
-- **[🔄 Flujos de Comunicación](./diagrams/COMMUNICATION_FLOWS.md)** - Interacciones entre servicios
-- **[🗄️ Esquema de Base de Datos](./diagrams/DATABASE_SCHEMA.md)** - Estructura de datos
-- **[☁️ Infraestructura Kubernetes](./diagrams/KUBERNETES_INFRASTRUCTURE.md)** - Deployment detallado
-- **[🔐 Autenticación y Seguridad](./diagrams/AUTHENTICATION.md)** - Flujos de auth
+## 📚 Documentación Detallada y Diagramas
+
+<details>
+<summary><strong>🏗️ Arquitectura General</strong> (Clic para desplegar)</summary>
+<br>
+Vista completa del sistema mostrando Mobile App, Backoffice, Microservicios y Bases de datos.
+
+![Arquitectura General](./assets/images/architecture.jpeg)
+</details>
+
+<details>
+<summary><strong>☁️ Infraestructura Kubernetes</strong> (Clic para desplegar)</summary>
+<br>
+Deployment detallado en Hostinger VM con Ingress, Pods y StatefulSets.
+
+![Infraestructura Kubernetes](./assets/images/deploy_kb.jpeg)
+</details>
+
+<details>
+<summary><strong>🔄 Flujos de Comunicación y Procesos</strong> (Clic para desplegar)</summary>
+<br>
+Ejemplo de flujo de secuencia: Creación de álbum por administrador.
+
+![Flujo Backoffice](./assets/images/backoffice_flow.jpeg)
+</details>
+
+<details>
+<summary><strong>🧩 Componentes del Sistema</strong> (Clic para desplegar)</summary>
+<br>
+Vista simplificada de la interacción entre capas.
+
+![Componentes](./assets/images/components.jpeg)
+</details>
+
+<details>
+<summary><strong>🗄️ Esquema de Base de Datos</strong> (Pendiente)</summary>
+<br>
+<em>(Sube tu diagrama ER a la carpeta assets/images y actualiza esta ruta)</em>
+</details>
+
+<details>
+<summary><strong>🔐 Autenticación y Seguridad</strong> (Ver Flujos)</summary>
+<br>
+Los detalles de autenticación se visualizan en los diagramas de flujo de comunicación y arquitectura.
+</details>
 
 ### Documentación por API
 

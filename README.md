@@ -454,19 +454,6 @@ graph TB
     class PV_MYSQL,PV_MONGO storage
 ```
 
-### Configuración de Pods
-
-| Servicio | CPU Request | CPU Limit | Memory Request | Memory Limit | Replicas |
-|----------|-------------|-----------|----------------|--------------|----------|
-| Gateway | 100m | 500m | 128Mi | 512Mi | 2 |
-| Catalog API | 200m | 1000m | 256Mi | 1Gi | 3 |
-| User API | 100m | 500m | 128Mi | 512Mi | 2 |
-| Artist API | 100m | 500m | 128Mi | 512Mi | 2 |
-| Analytics API | 150m | 750m | 256Mi | 1Gi | 2 |
-| Notifications API | 100m | 500m | 128Mi | 512Mi | 2 |
-
----
-
 ## 📚 Documentación Detallada
 
 ### Diagramas de Arquitectura

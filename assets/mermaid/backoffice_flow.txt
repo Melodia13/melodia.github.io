@@ -1,0 +1,15 @@
+flowchart TD
+  User[Admin User]
+  Frontend[Backoffice Frontend - React TypeScript]
+  ApíGateway
+  CatalogAPI[Catalog Microservice]
+  UserAPI[User Microservice]
+  AnalyticsAPI[Analytics Microservice]
+  Supabase[Supabase Storage]
+
+  User --> Frontend
+  Frontend -- REST API --> ApíGateway
+  ApíGateway -- Catalog Ops --> CatalogAPI
+  ApíGateway -- User/Auth --> UserAPI
+  ApíGateway -- Metrics/Audit --> AnalyticsAPI
+  ApíGateway -- File Uploads --> Supabase

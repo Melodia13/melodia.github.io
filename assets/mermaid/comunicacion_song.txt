@@ -1,0 +1,34 @@
+sequenceDiagram
+    participant M as 📱 Mobile App
+    participant G as 🌐 Gateway
+    participant U as 👤 User API
+    participant C as 📚 Catalog API
+    participant A as 🎤 Artist API
+    participant AN as 📊 Analytics API
+    
+    Note over M,AN: Flujo de Autenticación
+    M->>G: 1. POST /auth/login
+    G->>U: Forward Request
+    U-->>G: JWT Token + User Data
+    G-->>M: 200 OK + Token
+    
+    Note over M,AN: Flujo de Búsqueda de Música
+    M->>G: 2. GET /catalog/search?q=rock
+    G->>C: Forward + Bearer Token
+    C->>U: Validate Token
+    U-->>C: Token Valid
+    C-->>G: Search Results
+    G-->>M: 200 OK + Results
+    
+    Note over M,AN: Flujo de Reproducción
+    M->>G: 3. GET /catalog/songs/{id}/stream
+    G->>C: Stream Request
+    C-->>G: Audio Stream
+    G-->>M: Audio Data
+    
+    M->>G: 4. POST /analytics/events/play
+    G->>AN: Record Play Event
+    AN->>C: Increment Play Count
+    C-->>AN: Updated
+    AN-->>G: Event Recorded
+    G-->>M: 201 Created

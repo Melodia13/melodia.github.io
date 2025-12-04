@@ -55,9 +55,9 @@ La plataforma permite a los usuarios descubrir, reproducir y gestionar música, 
 
 ## 🏗️ Componentes de la Plataforma
 
-### 1. 📱 Mobile App (React Native / Flutter)
+### 1. 📱 Mobile App (Expo go / React Native)
 
-**Descripción**: Aplicación móvil para usuarios finales (iOS y Android)
+**Descripción**: Aplicación móvil para usuarios finales (Android)
 
 **Funcionalidades**:
 - 🎵 Reproducción de música en streaming
@@ -69,7 +69,7 @@ La plataforma permite a los usuarios descubrir, reproducir y gestionar música, 
 - 🎨 Interfaz intuitiva y responsive
 
 **Tecnologías**:
-- React Native / Flutter
+- Expo Go / React Native
 - Redux / Context API para state management
 - Axios para API calls
 - AsyncStorage para persistencia local
@@ -77,7 +77,6 @@ La plataforma permite a los usuarios descubrir, reproducir y gestionar música, 
 **Comunicación**:
 - Consume APIs REST a través del API Gateway
 - Autenticación con JWT tokens
-- WebSocket para notificaciones en tiempo real (futuro)
 
 ---
 
@@ -92,12 +91,9 @@ La plataforma permite a los usuarios descubrir, reproducir y gestionar música, 
 - Bloqueo/desbloqueo de cuentas
 - Cambio de roles (Listener, Artist, Admin)
 - Visualización detallada de perfiles
-- Historial de actividad
 
 #### 🎵 Gestión de Catálogo
-- **CRUD completo** de álbumes, singles, EPs, canciones
-- Gestión de playlists (públicas y privadas)
-- Administración de géneros musicales
+- Visualizacion de playlists (públicas y privadas)
 - Upload de archivos multimedia (audio, imágenes)
 - Filtros avanzados y búsqueda
 - Previsualización de contenido
@@ -109,17 +105,21 @@ La plataforma permite a los usuarios descubrir, reproducir y gestionar música, 
 - Auditoría de cambios en políticas
 
 #### 📊 Analytics y Métricas
-- **Dashboard en tiempo real** con métricas clave:
-    - Registros nuevos
-    - Inicios de sesión
-    - Reproducciones totales
-    - Canciones más escuchadas
-- **Filtros avanzados**:
+- **Dashboard con métricas clave**:
+    - Usuarios
+        - Registros nuevos
+        - Inicios de sesión
+        - Reproducciones totales
+        - Canciones más escuchadas
+    - Catalogo
+        - Canciones
+        - Albums
+        - Artistas
+- **Filtros**:
     - Por periodo de tiempo
     - Por entorno (dev/prod)
     - Por región geográfica
     - Por tipo de usuario
-    - Por método de login
 - **Breakdowns por etiquetas**:
     - Distribución por región
     - Distribución por tipo de usuario
@@ -128,10 +128,7 @@ La plataforma permite a los usuarios descubrir, reproducir y gestionar música, 
 - Integración con DataDog para métricas avanzadas
 
 #### 📝 Auditoría
-- Registro de todas las acciones administrativas
-- Historial detallado de cambios
-- Filtros por usuario, fecha, tipo de acción
-- Trazabilidad completa
+- Historial de cambios
 
 **Tecnologías**:
 - **Frontend**: React 18+ con TypeScript
@@ -139,7 +136,7 @@ La plataforma permite a los usuarios descubrir, reproducir y gestionar música, 
 - **Styling**: CSS Modules
 - **State Management**: React Context / Hooks
 - **HTTP Client**: Fetch API / Axios
-- **Storage**: Supabase para archivos multimedia
+- **Integracion**: Supabase para archivos multimedia
 
 **Endpoints Consumidos**:
 ```
@@ -153,8 +150,8 @@ La plataforma permite a los usuarios descubrir, reproducir y gestionar música, 
 
 **Configuración**:
 ```env
-VITE_API_URL=http://xyziverse.xyz:32260
-VITE_API_URL_ARTIST=http://artist-api:8081
+VITE_API_URL=https://xyziverse.xyz
+VITE_API_URL_ARTIST=https://xyziverse.xyz
 EXPO_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 EXPO_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
 ```
@@ -165,7 +162,6 @@ EXPO_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
 - Manejo de expiración de sesión
 - Logout centralizado
 - Validación de formularios
-- Sanitización de inputs
 
 ---
 
@@ -311,6 +307,8 @@ Melodía utiliza una **arquitectura de microservicios** desplegada en **Kubernet
 ### Kubernetes Deployment
 
 <img src="./assets/images/kube-deploy.png" alt="Deploy kubernetes" width="100%">
+
+### Backoffice
 
 <img src="./assets/images/backoffice_flow.jpeg" alt="Flujo Backoffice" width="100%">
 

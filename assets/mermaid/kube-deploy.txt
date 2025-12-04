@@ -1,0 +1,76 @@
+graph TB
+    Internet[🌐 Internet] -->|HTTPS| NGINX
+
+    subgraph "Hostinger VM"
+        NGINX[Nginx Reverse Proxy]
+        
+        subgraph "Kubernetes Cluster"
+            
+            subgraph "Gateway Layer"
+                GW_SVC["Service: gateway-svc"]
+                GW_POD["Pod: API Gateway"]
+            end
+            
+            subgraph "Application Pods"
+                CAT_POD["Pod: catalog-api"]
+                USER_POD["Pod: user-api"]
+                ART_POD["Pod: artist-api"]
+                ANA_POD["Pod: analytics-api"]
+                NOT_POD["Pod: notifications-api"]
+            end
+            
+            subgraph "Data Services"
+                DB_CAT["StatefulSet: Catalog DB<br/>(MySQL)"]
+                DB_USER["StatefulSet: User DB<br/>(MySQL)"]
+                DB_ART["StatefulSet: Artist DB<br/>(MySQL)"]
+                DB_ANA["StatefulSet: Analytics DB<br/>(MongoDB)"]
+                DB_NOT["StatefulSet: Notif DB<br/>(MySQL)"]
+            end
+            
+            subgraph "Storage"
+                PV_CAT["PV: Catalog Data"]
+                PV_USER["PV: User Data"]
+                PV_ART["PV: Artist Data"]
+                PV_ANA["PV: Analytics Data"]
+                PV_NOT["PV: Notif Data"]
+            end
+        end
+    end
+
+    %% Routing Flow
+    NGINX -->|Forward| GW_SVC
+    GW_SVC --> GW_POD
+    
+    %% Internal Gateway Routing
+    GW_POD --> CAT_POD
+    GW_POD --> USER_POD
+    GW_POD --> ART_POD
+    GW_POD --> ANA_POD
+    GW_POD --> NOT_POD
+    
+    %% 1-to-1 Mapping: App to DB
+    CAT_POD --> DB_CAT
+    USER_POD --> DB_USER
+    ART_POD --> DB_ART
+    ANA_POD --> DB_ANA
+    NOT_POD --> DB_NOT
+    
+    %% Storage Mapping
+    DB_CAT --> PV_CAT
+    DB_USER --> PV_USER
+    DB_ART --> PV_ART
+    DB_ANA --> PV_ANA
+    DB_NOT --> PV_NOT
+
+    %% Styles
+    classDef proxy fill:#607D8B,stroke:#37474F,stroke-width:2px,color:white
+    classDef gateway fill:#FFF3E0,stroke:#FF9800,stroke-width:2px
+    classDef app fill:#E8F5E9,stroke:#4CAF50,stroke-width:2px
+    classDef data fill:#F3E5F5,stroke:#9C27B0,stroke-width:2px
+    classDef storage fill:#E3F2FD,stroke:#2196F3,stroke-width:2px
+
+    class NGINX proxy
+    class GW_POD,GW_SVC gateway
+    class CAT_POD,USER_POD,ART_POD,ANA_POD,NOT_POD app
+    class DB_CAT,DB_USER,DB_ART,DB_ANA,DB_NOT data
+    class PV_CAT,PV_USER,PV_ART,PV_ANA,PV_NOT storage

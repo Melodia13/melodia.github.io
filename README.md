@@ -22,9 +22,18 @@
 - [Arquitectura del Sistema](#-arquitectura-del-sistema)
 - [Microservicios](#-microservicios)
 - [Tecnologías](#-tecnologías)
-- [Infraestructura](#-infraestructura)
+  - [Backend](#backend)
+  - [Bases de Datos](#bases-de-datos)
+  - [Infraestructura](#infraestructura)
+  - [Observabilidad](#observabilidad)
 - [Documentación Detallada](#-documentación-detallada)
+  - [Kubernetes Deployment](#kubernetes-deployment)
+  - [Backoffice](#backoffice)
+  - [Documentación por API](#documentación-por-api)
 - [Guía Rápida](#-guía-rápida)
+  - [Requisitos Previos](#requisitos-previos)
+- [Licencia](#-licencia)
+- [Repositorio de Documentación](#documentación-httpsgithubcommelodia13melodiagithubio)
 
 ---
 
@@ -302,24 +311,14 @@ Melodía utiliza una **arquitectura de microservicios** desplegada en **Kubernet
 
 <img src="./assets/images/backoffice_flow.png" alt="Flujo Backoffice" width="100%">
 
-<img src="./assets/images/components.jpeg" alt="Componentes" width="100%">
-
 
 ### Documentación por API
 
-- **[📚 Catalog API](./docs/CATALOG_API.md)** - Gestión del catálogo musical
-- **[👤 User API](./docs/USER_API.md)** - Usuarios y autenticación
-- **[🎤 Artist API](./docs/ARTIST_API.md)** - Perfiles de artistas
-- **[📊 Analytics API](./docs/ANALYTICS_API.md)** - Métricas y analytics
-- **[🔔 Notifications API](./docs/NOTIFICATIONS_API.md)** - Sistema de notificaciones
-
-### Guías Técnicas
-
-- **[🚀 Guía de Deployment](./docs/DEPLOYMENT_GUIDE.md)** - Despliegue en Kubernetes
-- **[⚙️ Configuración](./docs/CONFIGURATION.md)** - Variables de entorno
-- **[🧪 Testing](./docs/TESTING_GUIDE.md)** - Estrategia de pruebas
-- **[🔍 Troubleshooting](./docs/TROUBLESHOOTING.md)** - Resolución de problemas
-- **[📈 Monitoring](./docs/MONITORING.md)** - Observabilidad y alertas
+- **[📚 Catalog API](https://github.com/Melodia13/catalog-api)** - Gestión del catálogo musical
+- **[👤 User API](https://github.com/Melodia13/user-api)** - Usuarios y autenticación
+- **[🎤 Artist API](https://github.com/Melodia13/artist-api)** - Perfiles de artistas
+- **[📊 Analytics API](https://github.com/Melodia13/analytics-api)** - Métricas y analytics
+- **[🔔 Notifications API](https://github.com/Melodia13/notifications-api)** - Sistema de notificaciones
 
 ---
 
@@ -330,123 +329,7 @@ Melodía utiliza una **arquitectura de microservicios** desplegada en **Kubernet
 - Acceso a la VM de Hostinger
 - kubectl configurado
 - Docker (para desarrollo local)
-- Go 1.24+ (para desarrollo)
 
-### Desplegar en Kubernetes
-
-```bash
-# 1. Conectar al cluster
-kubectl config use-context melodia-production
-
-# 2. Aplicar configuraciones
-kubectl apply -f k8s/namespace.yaml
-kubectl apply -f k8s/configmaps/
-kubectl apply -f k8s/secrets/
-kubectl apply -f k8s/databases/
-kubectl apply -f k8s/services/
-
-# 3. Verificar deployments
-kubectl get pods -n melodia-production
-
-# 4. Ver logs
-kubectl logs -f deployment/catalog-api -n melodia-production
-```
-
-### Desarrollo Local
-
-```bash
-# 1. Clonar repositorio
-git clone https://github.com/melodia/melodia-platform.git
-cd melodia-platform
-
-# 2. Iniciar bases de datos
-docker-compose up -d mysql mongodb
-
-# 3. Iniciar un servicio (ejemplo: Catalog API)
-cd catalog-api
-cp .env.example .env
-go run cmd/main.go
-
-# 4. El servicio estará disponible en http://localhost:8082
-```
-
-### Endpoints Principales
-
-| Servicio | Base URL | Health Check |
-|----------|----------|--------------|
-| **Gateway** | `https://api.melodia.com` | - |
-| **Catalog** | `/api/v1/catalog` | `GET /health` |
-| **User** | `/api/v1/users` | `GET /health` |
-| **Artist** | `/api/v1/artists` | `GET /health` |
-| **Analytics** | `/api/v1/analytics` | `GET /health` |
-| **Notifications** | `/api/v1/notifications` | `GET /health` |
-
----
-
-## 🔐 Autenticación
-
-Todos los endpoints (excepto `/health` y endpoints públicos) requieren autenticación JWT:
-
-```bash
-# 1. Obtener token
-curl -X POST https://api.melodia.com/api/v1/users/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{
-    "email": "user@example.com",
-    "password": "password123"
-  }'
-
-# 2. Usar token en requests
-curl https://api.melodia.com/api/v1/catalog/albums \
-  -H "Authorization: Bearer <your-jwt-token>"
-```
-
----
-
-## 📊 Monitoring y Observabilidad
-
-### DataDog Dashboard
-
-Accede a [DataDog](https://app.datadoghq.com) para ver:
-- Request rates y latencias
-- Error rates por servicio
-- Distributed tracing
-- Resource utilization
-
-### Logs
-
-```bash
-# Ver logs de un servicio específico
-kubectl logs -f deployment/catalog-api -n melodia-production
-
-# Ver logs de todos los pods de un servicio
-kubectl logs -f -l app=catalog-api -n melodia-production
-
-# Ver logs con timestamp
-kubectl logs --since=1h deployment/catalog-api -n melodia-production
-```
-
-### Métricas
-
-```bash
-# Ver métricas de pods
-kubectl top pods -n melodia-production
-
-# Ver métricas de nodos
-kubectl top nodes
-```
-
----
-
-## 🤝 Contribuir
-
-Para contribuir al proyecto:
-
-1. Fork el repositorio
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
 
 ---
 
@@ -454,15 +337,8 @@ Para contribuir al proyecto:
 
 Este proyecto es propiedad privada de Melodía. Todos los derechos reservados.
 
----
 
-## 📞 Contacto
-
-- **Email**: dev@melodia.com
-- **Slack**: #melodia-dev
-- **Documentación**: https://github.com/Melodia13/melodia.github.io
-
----
+## **Documentación**: https://github.com/Melodia13/melodia.github.io
 
 <div align="center">
 

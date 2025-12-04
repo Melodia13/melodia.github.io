@@ -389,29 +389,16 @@ sequenceDiagram
 
 ---
 
-## ☁️ Infraestructura
-
-### Kubernetes Deployment
-
-
-<img src="./assets/images/kube-deploy.png" alt="Deply kubernetes" width="100%">
-
 
 ## 📚 Documentación Detallada
 
-### Diagramas de Arquitectura
+### Kubernetes Deployment
 
-## 📚 Documentación Detallada y Diagramas
-
-
-<img src="./assets/images/architecture.jpeg" alt="Arquitectura General" width="100%">
-
-<img src="./assets/images/deploy_kb.jpeg" alt="Infraestructura Kubernetes" width="100%">
+<img src="./assets/images/kube-deploy.png" alt="Deply kubernetes" width="100%">
 
 <img src="./assets/images/backoffice_flow.jpeg" alt="Flujo Backoffice" width="100%">
 
 <img src="./assets/images/components.jpeg" alt="Componentes" width="100%">
-
 
 
 ### Documentación por API

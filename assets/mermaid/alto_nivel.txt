@@ -1,0 +1,61 @@
+graph TB
+    subgraph "Client Layer"
+        Mobile[📱 Mobile App<br/>Expo Go]
+    end
+
+    subgraph "Kubernetes Cluster - Hostinger VM"
+        Gateway[🌐 API Gateway<br/>Nginx/Kong]
+        
+        subgraph "Microservices Layer"
+            %% Definimos los nodos
+            User[👤 User API]
+            Catalog[📚 Catalog API]
+            Artist[🎤 Artist API]
+            Analytics[📊 Analytics API]
+            Notifications[🔔 Notifications API]
+            
+            %% TRUCO: Enlaces invisibles para forzar el orden de izquierda a derecha
+            User ~~~ Catalog ~~~ Artist ~~~ Analytics ~~~ Notifications
+        end
+        
+        subgraph "Data Layer"
+            DB_User[(🗄️ MySQL<br/>User DB)]
+            DB_Cat[(🗄️ MySQL<br/>Catalog DB)]
+            DB_Art[(🗄️ MySQL<br/>Artist DB)]
+            DB_Ana[(🍃 MongoDB<br/>Analytics DB)]
+            DB_Not[(🗄️ MySQL<br/>Notif DB)]
+        end
+    end
+
+    %% --- CONEXIONES ---
+
+    %% 1. Tráfico de Entrada
+    Mobile -->|HTTPS| Gateway
+    
+    %% 2. Enrutamiento del Gateway (Ordenado para que las lineas no se crucen tanto)
+    Gateway --> User
+    Gateway --> Catalog
+    Gateway --> Artist
+    Gateway --> Analytics
+    
+    %% 3. Flujo Inverso (Notificaciones)
+    %% Sacamos la linea por fuera para que se vea claro que es asíncrono/push
+    Notifications -.->|Push Notif| Mobile
+
+    %% 4. Database per Service (Verticalidad estricta)
+    User --> DB_User
+    Catalog --> DB_Cat
+    Artist --> DB_Art
+    Analytics --> DB_Ana
+    Notifications --> DB_Not
+
+    %% Estilos
+    classDef client fill:#E1F5FE,stroke:#2196F3,stroke-width:3px
+    classDef gateway fill:#FFF3E0,stroke:#FF9800,stroke-width:3px
+    classDef service fill:#E8F5E9,stroke:#4CAF50,stroke-width:2px
+    classDef database fill:#F3E5F5,stroke:#9C27B0,stroke-width:2px
+
+    class Mobile client
+    class Gateway gateway
+    class Catalog,User,Artist,Analytics,Notifications service
+    class DB_Cat,DB_User,DB_Art,DB_Ana,DB_Not database
